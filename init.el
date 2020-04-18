@@ -18,18 +18,10 @@
 
 ;; === INSTALLED PACKAGES ===
 (ensure-package-installed
-    'projectile
     'magit
     'evil
-    'eldoc
-    'irony
-    'irony-eldoc
     'flycheck
-    'flycheck-irony
-    'counsel
     'smartparens
-    'xcscope
-    'rust-mode
     'which-key
 )
 
@@ -39,48 +31,15 @@
 (require 'which-key)
 (which-key-mode)
 
-;; rust
-(require 'rust-mode)
-(add-hook 'rust-mode-hook
-	  (lambda () (setq indent-tabs-mode nil)))
-(setq rust-format-on-save t)
-
 ;; evil
 (require 'evil)
-;(evil-set-initial-state 'cscope-list-entry-mode 'emacs) ;; Why does this not work... workaround in ctags settings
 (evil-mode 1)
-
-;; Projectile
-(require 'projectile)
-(projectile-mode 1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
-;; irony
-(require 'irony)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(define-key irony-mode-map (kbd "s-/") 'irony-get-type)
-
-;; eldoc
-(require 'eldoc)
-(require 'irony-eldoc)
-(add-hook 'irony-mode-hook #'irony-eldoc)
 
 ;; flycheck
 (require 'flycheck)
 (require 'flycheck-irony)
 (add-hook 'c-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)
-(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
-
-;; counsel-irony
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map
-    [remap completion-at-point] 'counsel-irony)
-  (define-key irony-mode-map
-    [remap complete-symbol] 'counsel-irony))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
 
 ;; /smartparens/: insert pair of symbols
 ;; when you press RET, the curly braces automatically add another newline
@@ -90,12 +49,6 @@
 (sp-with-modes '(c-mode c++-mode)
   (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
   (sp-local-pair "/*" "*/" :post-handlers '(("| " "SPC") ("* ||\n[i]" "RET"))))
-
-;; ctags
-(require 'xcscope)
-(add-hook 'cscope-list-entry-hook
-	  (lambda () (evil-emacs-state 1)))
-(cscope-setup)
 
 ;; === AUTO GENERATED ===
 (custom-set-variables
