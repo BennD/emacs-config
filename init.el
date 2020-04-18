@@ -71,8 +71,9 @@
   (sp-local-pair "/*" "*/" :post-handlers '(("| " "SPC") ("* ||\n[i]" "RET"))))
 
 ;; rustic
-;(require 'rustic)
-;(add-hook 'rust-mode-hook 'rustic-mode)
+(require 'rustic)
+(setq rustic-lsp-server 'rust-analyzer)
+(add-hook 'rust-mode-hook 'rustic-mode)
 
 ;; flycheck
 (require 'flycheck)
@@ -82,12 +83,13 @@
 (require 'company)
 (require 'company-lsp)
 (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0) ;; default is 0.2
+      company-idle-delay 0.1) ;; default is 0.2
 (push 'company-lsp company-backends)
 
 ;; LSP-mode
 (require 'lsp-ui)
 (require 'lsp-mode)
+(setq lsp-idle-delay 0.1)
 (add-hook 'prog-mode-hook #'lsp)
 (add-hook 'lsp-mode #'lsp-enable-which-key-integration)
 
