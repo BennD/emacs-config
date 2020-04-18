@@ -88,8 +88,8 @@
 (require 'lsp-ui)
 (require 'lsp-mode)
 (setq lsp-idle-delay 0.1)
-(add-hook 'prog-mode-hook #'lsp)
-(add-hook 'lsp-mode #'lsp-enable-which-key-integration)
+(add-hook 'prog-mode-hook 'lsp)
+(add-hook 'lsp-mode 'lsp-enable-which-key-integration)
 
 ;; Bell alternative
 (setq visible-bell nil
@@ -97,28 +97,13 @@
 (defun double-flash-mode-line () "Flashes the mode-line twice."
   (let ((flash-sec (/ 1.0 20)))
     (invert-face 'mode-line)
-    (run-with-timer flash-sec nil #'invert-face 'mode-line)
-    (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
-    (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
+    (run-with-timer flash-sec nil 'invert-face 'mode-line)
+    (run-with-timer (* 2 flash-sec) nil 'invert-face 'mode-line)
+    (run-with-timer (* 3 flash-sec) nil 'invert-face 'mode-line)))
 
-;; === AUTO GENERATED ===
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (tango-dark)))
- '(package-selected-packages
-   (quote
-    (rustic company-lsp company lsp-ui lsp-mode which-key magit ## evil))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; relocate custom settings
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file :noerror)
 
 (provide 'init)
 ;;; init.el ends here
