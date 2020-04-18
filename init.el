@@ -61,12 +61,10 @@
 (require 'evil)
 (evil-mode 1)
 
-;; /smartparens/: insert pair of symbols
-;; when you press RET, the curly braces automatically add another newline
+;; smartparens
 (require 'smartparens-config)
-(add-hook 'c-mode-hook #'smartparens-mode)
-(add-hook 'c++-mode-hook #'smartparens-mode)
-(sp-with-modes '(c-mode c++-mode)
+(add-hook 'prog-mode-hook 'smartparens-mode)
+(sp-with-modes '(c-mode c++-mode rustic-mode)
   (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
   (sp-local-pair "/*" "*/" :post-handlers '(("| " "SPC") ("* ||\n[i]" "RET"))))
 
