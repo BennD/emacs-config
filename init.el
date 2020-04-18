@@ -93,7 +93,15 @@
 (add-hook 'prog-mode-hook #'lsp)
 (add-hook 'lsp-mode #'lsp-enable-which-key-integration)
 
-
+;; Bell alternative
+(setq visible-bell nil
+      ring-bell-function 'double-flash-mode-line)
+(defun double-flash-mode-line () "Flashes the mode-line twice."
+  (let ((flash-sec (/ 1.0 20)))
+    (invert-face 'mode-line)
+    (run-with-timer flash-sec nil #'invert-face 'mode-line)
+    (run-with-timer (* 2 flash-sec) nil #'invert-face 'mode-line)
+    (run-with-timer (* 3 flash-sec) nil #'invert-face 'mode-line)))
 
 ;; === AUTO GENERATED ===
 (custom-set-variables
