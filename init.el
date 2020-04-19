@@ -15,6 +15,9 @@
 ;
 ; company-box | https://github.com/sebastiencs/company-box/
 ; - better frondend for company (no tty support though)
+;
+; neotree | https://github.com/jaypei/emacs-neotree
+; - (doom-themes-neotree-config) to enable doom-themes for neotree
 
 ;;; Code:
 ;; === SETUP ===
@@ -110,6 +113,11 @@
 
 ;; hightlight matching bracket
 (show-paren-mode t)
+
+;; hide toolbar/menubar
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
