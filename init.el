@@ -1,5 +1,8 @@
 ;;; package --- Summary
 ; inits emacs and guarantees that all required packages are installed
+;
+; MANDATORY STEPS
+; - M-x all-the-icons-install-fonts | installs all needed icons/fonts
 
 ;;; Commentary:
 ; type completion alternatives: helm-lsp, lsp-ivy
@@ -43,6 +46,9 @@
     'company        ;; https://github.com/company-mode/company-mode
     'company-lsp    ;; https://github.com/tigersoldier/company-lsp
     'rustic         ;; https://github.com/brotzeit/rustic
+    'doom-modeline  ;; https://github.com/seagle0128/doom-modeline
+    'all-the-icons  ;; https://github.com/domtronn/all-the-icons.el
+    'doom-themes    ;; https://github.com/hlissner/emacs-doom-themes
 )
 
 
@@ -91,15 +97,16 @@
 (add-hook 'prog-mode-hook 'lsp)
 (add-hook 'lsp-mode 'lsp-enable-which-key-integration)
 
-;; Bell alternative
-(setq visible-bell nil
-      ring-bell-function 'double-flash-mode-line)
-(defun double-flash-mode-line () "Flashes the mode-line twice."
-  (let ((flash-sec (/ 1.0 20)))
-    (invert-face 'mode-line)
-    (run-with-timer flash-sec nil 'invert-face 'mode-line)
-    (run-with-timer (* 2 flash-sec) nil 'invert-face 'mode-line)
-    (run-with-timer (* 3 flash-sec) nil 'invert-face 'mode-line)))
+;; doom modeline
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+
+;; doom themes
+(require 'doom-themes)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+(doom-themes-visual-bell-config)
+(doom-themes-org-config)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
