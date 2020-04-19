@@ -108,6 +108,9 @@
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 
+;; hightlight matching bracket
+(show-paren-mode t)
+
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file :noerror)
