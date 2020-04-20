@@ -138,7 +138,9 @@
  "g" 'magit-status)
 (general-define-key
  :states '(normal emacs)
- "TAB" 'mode-line-other-buffer)
+ "TAB" 'mode-line-other-buffer
+ "C-." 'next-buffer
+ "C-," 'previous-buffer)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
