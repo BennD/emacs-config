@@ -105,7 +105,7 @@
 ;; LSP-mode
 (require 'lsp-ui)
 (require 'lsp-mode)
-(setq lsp-idle-delay 0.1)
+(setq lsp-idle-delay 1)
 (add-hook 'prog-mode-hook 'lsp)
 (add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
 
@@ -134,17 +134,20 @@
  :prefix "SPC"
  :states '(normal emacs)
  "SPC" 'amx
+ "TAB" 'mode-line-other-buffer
  "p" 'projectile-command-map
  "g" 'magit-status)
 (general-define-key
  :states '(normal emacs)
- "TAB" 'mode-line-other-buffer
  "C-." 'next-buffer
  "C-," 'previous-buffer)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file :noerror)
+
+;; relocate backup files to for less clutter
+(setq backup-directory-alist '(("." . "~/.emacs_backup_files")))
 
 (provide 'init)
 ;;; init.el ends here
