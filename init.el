@@ -52,15 +52,24 @@
     'doom-modeline  ;; https://github.com/seagle0128/doom-modeline
     'all-the-icons  ;; https://github.com/domtronn/all-the-icons.el
     'doom-themes    ;; https://github.com/hlissner/emacs-doom-themes
+    'projectile     ;; https://github.com/bbatsov/projectile
+    'general        ;; https://github.com/noctuid/general.el
+    'amx            ;; https://github.com/DarwinAwardWinner/amx
 )
 
 
 
 ;; === CUSTOM CONFIGS ===
 
+;; amx
+(require 'amx)
+
 ;; magit
 (require 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+
+;; projectile
+(require 'projectile)
+(projectile-mode +1)
 
 ;; which-key
 (require 'which-key)
@@ -118,6 +127,14 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; 'general' keybindings
+(general-define-key
+ :prefix "SPC"
+ :keymaps '(normal emacs)
+ "SPC" 'amx
+ "p" 'projectile-command-map
+ "g" 'magit-status)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
