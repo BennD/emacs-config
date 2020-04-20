@@ -107,7 +107,7 @@
 (require 'lsp-mode)
 (setq lsp-idle-delay 0.1)
 (add-hook 'prog-mode-hook 'lsp)
-(add-hook 'lsp-mode 'lsp-enable-which-key-integration)
+(add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
 
 ;; doom modeline
 (require 'doom-modeline)
