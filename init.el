@@ -136,6 +136,9 @@
  "SPC" 'amx
  "p" 'projectile-command-map
  "g" 'magit-status)
+(general-define-key
+ :states '(normal emacs)
+ "TAB" 'mode-line-other-buffer)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
