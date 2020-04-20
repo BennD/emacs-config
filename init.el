@@ -129,9 +129,10 @@
 (scroll-bar-mode -1)
 
 ;; 'general' keybindings
+(evil-define-key 'normal lsp-mode-map (kbd "SPC l") lsp-command-map)
 (general-define-key
  :prefix "SPC"
- :keymaps '(normal emacs)
+ :states '(normal emacs)
  "SPC" 'amx
  "p" 'projectile-command-map
  "g" 'magit-status)
