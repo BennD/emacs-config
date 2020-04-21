@@ -106,6 +106,8 @@
 (require 'lsp-ui)
 (require 'lsp-mode)
 (setq lsp-idle-delay 1)
+(setq lsp-ui-doc-delay 1)
+(setq lsp-ui-sideline-delay 1)
 (add-hook 'prog-mode-hook 'lsp)
 (add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
 
