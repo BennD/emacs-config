@@ -109,6 +109,7 @@
 (setq lsp-idle-delay 1)
 (setq lsp-ui-sideline-delay 1)
 (setq lsp-ui-doc-enable nil)
+(setq lsp-keymap-prefix "SPC l") ;; fix which-key integration, doesn't actually bind (i think)
 (add-hook 'prog-mode-hook 'lsp)
 (add-hook 'prog-mode-hook 'lsp-enable-which-key-integration)
 
@@ -135,15 +136,28 @@
 (general-define-key
  :prefix "SPC"
  :states '(normal emacs)
- "SPC" 'amx
- "TAB" 'mode-line-other-buffer
+
+ ;; ungrouped
+ "" '(nil :which-key "Leader Key")
+ "SPC" '(amx :which-key "M-x")
  "g" 'magit-status
- "x" 'delete-other-windows
- "." 'next-buffer
- "," 'previous-buffer
- "p" 'projectile-command-map ;; why is this different?
- "e" '(:keymap flycheck-command-map :package flycheck)
- "l" '(:keymap lsp-command-map :package lsp) ;; this doesn't update the which-key integration
+
+ ;; window
+ "w" '(nil :which-key "window")
+ "w d" '(nil :which-key "delete")
+ "w d m" '(delete-window :which-key "this")
+ "w d o" '(delete-other-windows :which-key "others")
+
+ ;; buffer - bundle into keymap
+ "b" '(nil :which-key "buffer")
+ "b TAB" 'mode-line-other-buffer
+ "b n" 'next-buffer
+ "b p" 'previous-buffer
+
+ ;; keymaps
+ "p" '(projectile-command-map :which-key "projectile") ;; why is this different?
+ "e" '(:keymap flycheck-command-map :which-key "flycheck")
+ "l" '(:keymap lsp-command-map :which-key "LSP")
 )
 
 ;; relocate custom settings
