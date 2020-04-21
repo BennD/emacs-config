@@ -93,7 +93,8 @@
 
 ;; flycheck
 (require 'flycheck)
-(global-flycheck-mode 1)
+(setq flycheck-highlighting-mode nil)
+(add-hook 'prog-mode-hook 'flycheck-mode)
 
 ;; company
 (require 'company)
@@ -106,10 +107,10 @@
 (require 'lsp-ui)
 (require 'lsp-mode)
 (setq lsp-idle-delay 1)
-(setq lsp-ui-doc-delay 1)
 (setq lsp-ui-sideline-delay 1)
+(setq lsp-ui-doc-enable nil)
 (add-hook 'prog-mode-hook 'lsp)
-(add-hook 'lsp-mode-hook 'lsp-enable-which-key-integration)
+(add-hook 'prog-mode-hook 'lsp-enable-which-key-integration)
 
 ;; doom modeline
 (require 'doom-modeline)
@@ -131,18 +132,19 @@
 (scroll-bar-mode -1)
 
 ;; 'general' keybindings
-(evil-define-key 'normal lsp-mode-map (kbd "SPC l") lsp-command-map)
 (general-define-key
  :prefix "SPC"
  :states '(normal emacs)
  "SPC" 'amx
  "TAB" 'mode-line-other-buffer
- "p" 'projectile-command-map
- "g" 'magit-status)
-(general-define-key
- :states '(normal emacs)
- "C-." 'next-buffer
- "C-," 'previous-buffer)
+ "g" 'magit-status
+ "x" 'delete-other-windows
+ "." 'next-buffer
+ "," 'previous-buffer
+ "p" 'projectile-command-map ;; why is this different?
+ "e" '(:keymap flycheck-command-map :package flycheck)
+ "l" '(:keymap lsp-command-map :package lsp) ;; this doesn't update the which-key integration
+)
 
 ;; relocate custom settings
 (setq custom-file "~/.emacs.d/custom.el")
