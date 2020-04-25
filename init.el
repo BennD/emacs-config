@@ -138,26 +138,29 @@
  :states '(normal emacs)
 
  ;; ungrouped
- "" '(nil :which-key "Leader Key")
- "SPC" '(amx :which-key "M-x")
+ "" '(nil :wk "LeaderKey")
+ "SPC" '(amx :wk "M-x")
  "g" 'magit-status
 
  ;; window
- "w" '(nil :which-key "window")
- "w d" '(nil :which-key "delete")
- "w d m" '(delete-window :which-key "this")
- "w d o" '(delete-other-windows :which-key "others")
+ "w" '(nil :wk "window")
+ "w d" '(nil :wk "delete")
+ "w d m" '(delete-window :wk "this")
+ "w d o" '(delete-other-windows :wk "others")
 
  ;; buffer - bundle into keymap
- "b" '(nil :which-key "buffer")
- "b TAB" 'mode-line-other-buffer
- "b n" 'next-buffer
- "b p" 'previous-buffer
+ "b" '(nil :wk "buffer")
+ "b TAB" '(mode-line-other-buffer :wk "last")
+ "b n" '(next-buffer :wk "next")
+ "b p" '(previous-buffer :wk "previous")
+ "b r" '(revert-buffer :wk "revert")
+ "b s" '(save-buffer :wk "save")
+ "b e" '(eval-buffer :wk "eval")
 
  ;; keymaps
- "p" '(projectile-command-map :which-key "projectile") ;; why is this different?
- "e" '(:keymap flycheck-command-map :which-key "flycheck")
- "l" '(:keymap lsp-command-map :which-key "LSP")
+ "p" '(projectile-command-map :wk "projectile") ;; why is this different?
+ "e" '(:keymap flycheck-command-map :wk "flycheck")
+ "l" '(:keymap lsp-command-map :wk "LSP")
 )
 
 ;; relocate custom settings
