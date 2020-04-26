@@ -79,6 +79,13 @@
 (evil-set-initial-state 'neotree-mode 'emacs)
 (setq neo-theme 'icons)
 (setq neo-smart-open t)
+(defun custom-neotree-enter-hide (_eins _zwei _drei)
+  "Deine Mama."
+  (interactive)
+  (neotree-enter)
+  (neotree-hide)
+  )
+(add-hook 'neo-enter-hook 'custom-neotree-enter-hide)
 
 ;; which-key
 (require 'which-key)
@@ -173,10 +180,9 @@
 ;; neotree keybindings
 (general-define-key
  :keymaps 'neotree-mode-map
- "j" 'neotree-next-line
- "k" 'neotree-previous-line
+ "j" 'next-logical-line
+ "k" 'previous-logical-line
  "l" 'neotree-quick-look
- ; "RET" (progn (neotree-enter) (neotree-toggle)) ;; figure out how to do this
 )
 
 ;; relocate custom settings
