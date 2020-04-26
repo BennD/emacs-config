@@ -79,13 +79,12 @@
 (evil-set-initial-state 'neotree-mode 'emacs)
 (setq neo-theme 'icons)
 (setq neo-smart-open t)
-(defun custom-neotree-enter-hide (_eins _zwei _drei)
+(defun custom-neotree-enter-hide ()
   "Deine Mama."
   (interactive)
   (neotree-enter)
   (neotree-hide)
-  )
-(add-hook 'neo-enter-hook 'custom-neotree-enter-hide)
+)
 
 ;; which-key
 (require 'which-key)
@@ -162,7 +161,7 @@
  "w d m" '(delete-window :wk "this")
  "w d o" '(delete-other-windows :wk "others")
 
- ;; buffer - bundle into keymap
+ ;; buffer
  "b" '(nil :wk "buffer")
  "b TAB" '(mode-line-other-buffer :wk "last")
  "b n" '(next-buffer :wk "next")
@@ -183,6 +182,7 @@
  "j" 'next-logical-line
  "k" 'previous-logical-line
  "l" 'neotree-quick-look
+ "RET" 'custom-neotree-enter-hide
 )
 
 ;; relocate custom settings
