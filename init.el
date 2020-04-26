@@ -12,12 +12,10 @@
 ; - integrates nice with lsp-mode apperently
 ;				 
 ; project-treeview: lsp-treemacs
+; - (doom-themes-treemacs-config)
 ;
 ; company-box | https://github.com/sebastiencs/company-box/
 ; - better frondend for company (no tty support though)
-;
-; neotree | https://github.com/jaypei/emacs-neotree
-; - (doom-themes-neotree-config) to enable doom-themes for neotree
 
 ;;; Code:
 ;; === SETUP ===
@@ -55,11 +53,16 @@
     'projectile     ;; https://github.com/bbatsov/projectile
     'general        ;; https://github.com/noctuid/general.el
     'amx            ;; https://github.com/DarwinAwardWinner/amx
+    'neotree        ;; https://github.com/jaypei/emacs-neotree
 )
 
 
 
 ;; === CUSTOM CONFIGS ===
+
+;; evil
+(require 'evil)
+(evil-mode 1)
 
 ;; amx
 (require 'amx)
@@ -71,14 +74,16 @@
 (require 'projectile)
 (projectile-mode +1)
 
+;; neotree
+(require 'neotree)
+(evil-set-initial-state 'neotree-mode 'emacs)
+(setq neo-theme 'icons)
+(setq neo-smart-open t)
+
 ;; which-key
 (require 'which-key)
 (which-key-mode)
 (which-key-setup-side-window-right-bottom)
-
-;; evil
-(require 'evil)
-(evil-mode 1)
 
 ;; smartparens
 (require 'smartparens-config)
@@ -142,6 +147,7 @@
  "" '(nil :wk "LeaderKey")
  "SPC" '(amx :wk "M-x")
  "g" 'magit-status
+ "n" 'neotree-toggle
 
  ;; window
  "w" '(nil :wk "window")
@@ -162,6 +168,15 @@
  "p" '(projectile-command-map :wk "projectile") ;; why is this different?
  "e" '(:keymap flycheck-command-map :wk "flycheck")
  "l" '(:keymap lsp-command-map :wk "LSP")
+)
+
+;; neotree keybindings
+(general-define-key
+ :keymaps 'neotree-mode-map
+ "j" 'neotree-next-line
+ "k" 'neotree-previous-line
+ "l" 'neotree-quick-look
+ ; "RET" (progn (neotree-enter) (neotree-toggle)) ;; figure out how to do this
 )
 
 ;; relocate custom settings
