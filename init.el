@@ -18,7 +18,6 @@
 ; - better frondend for company (no tty support though)
 
 ;;; Code:
-;; === SETUP ===
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/")
@@ -26,123 +25,191 @@
 (package-initialize)
 (package-refresh-contents)
 
-;; === CUSTOM CHECK FUNCTION ===
-(defun ensure-package-installed (&rest packages) "Ensures all PACKAGES are installed."
-  (mapcar
-   (lambda (package)
-     (unless (package-installed-p package)
-       (package-install package)))
-   packages)
-  )
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
 
-;; === INSTALLED PACKAGES ===
-(ensure-package-installed
-    'magit          ;; https://github.com/magit/magit
-    'evil           ;; https://github.com/emacs-evil/evil
-    'flycheck       ;; https://github.com/flycheck/flycheck
-    'smartparens    ;; https://github.com/Fuco1/smartparens
-    'which-key      ;; https://github.com/justbur/emacs-which-key
-    'lsp-mode       ;; https://github.com/emacs-lsp/lsp-mode
-    'lsp-ui         ;; https://github.com/emacs-lsp/lsp-ui
-    'company        ;; https://github.com/company-mode/company-mode
-    'company-lsp    ;; https://github.com/tigersoldier/company-lsp
-    'rustic         ;; https://github.com/brotzeit/rustic
-    'doom-modeline  ;; https://github.com/seagle0128/doom-modeline
-    'all-the-icons  ;; https://github.com/domtronn/all-the-icons.el
-    'doom-themes    ;; https://github.com/hlissner/emacs-doom-themes
-    'projectile     ;; https://github.com/bbatsov/projectile
-    'general        ;; https://github.com/noctuid/general.el
-    'amx            ;; https://github.com/DarwinAwardWinner/amx
-    'neotree        ;; https://github.com/jaypei/emacs-neotree
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-directory-name-transformer    #'identity
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-extension-regex          treemacs-last-period-regex-value
+          treemacs-file-follow-delay             0.2
+          treemacs-file-name-transformer         #'identity
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-move-forward-on-expand        nil
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-asc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-user-mode-line-format         nil
+          treemacs-width                         35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
 )
 
+(use-package treemacs-evil
+  :after treemacs evil
+  :ensure t)
 
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
 
-;; === CUSTOM CONFIGS ===
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :ensure t
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  :ensure t)
+
+(use-package treemacs-persp
+  :after treemacs persp-mode
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
 
 ;; evil
-(require 'evil)
-(evil-mode 1)
+(use-package evil
+  :ensure t
+  :config (evil-mode 1))
 
 ;; amx
-(require 'amx)
+(use-package amx
+  :ensure t)
 
 ;; magit
-(require 'magit)
+(use-package magit
+  :ensure t)
 
 ;; projectile
-(require 'projectile)
-(projectile-mode +1)
-
-;; neotree
-(require 'neotree)
-(evil-set-initial-state 'neotree-mode 'emacs)
-(setq neo-theme 'icons)
-(setq neo-smart-open t)
-(defun custom-neotree-enter-hide ()
-  "Deine Mama."
-  (interactive)
-  (neotree-enter)
-  (neotree-hide)
-)
+(use-package projectile
+  :ensure t
+  :config (projectile-mode 1))
 
 ;; which-key
-(require 'which-key)
-(which-key-mode)
-(which-key-setup-side-window-right-bottom)
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom))
 
 ;; smartparens
-(require 'smartparens-config)
-(add-hook 'prog-mode-hook 'smartparens-mode)
-(sp-with-modes '(c-mode c++-mode rustic-mode)
-  (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
-  (sp-local-pair "/*" "*/" :post-handlers '(("| " "SPC") ("* ||\n[i]" "RET"))))
+(use-package smartparens
+  :ensure t
+  :hook (prog-mode . smartparens-mode)
+  :config
+  (sp-with-modes '(c-mode c++-mode rustic-mode)
+    (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
+    (sp-local-pair "/*" "*/" :post-handlers '(("| " "SPC") ("* ||\n[i]" "RET")))))
 
 ;; rustic
-(require 'rustic)
-(setq rustic-lsp-server 'rust-analyzer)
-(add-hook 'rust-mode-hook 'rustic-mode)
+(use-package rustic
+  :ensure t
+  :hook (rust-mode . rustic-mode)
+  :config (setq rustic-lsp-server 'rust-analyzer))
 
 ;; flycheck
-(require 'flycheck)
-(setq flycheck-highlighting-mode nil)
-(add-hook 'prog-mode-hook 'flycheck-mode)
+(use-package flycheck
+  :ensure t
+  :hook (prog-mode . flycheck-mode)
+  :config
+  (setq flycheck-highlighting-mode nil))
 
 ;; company
-(require 'company)
-(require 'company-lsp)
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0.1) ;; default is 0.2
-(push 'company-lsp company-backends)
+(use-package company
+  :ensure t
+  :config
+  (setq company-minimum-prefix-length 1
+	company-idle-delay 0.1))
+
+(use-package company-lsp
+  :ensure t
+  :after company
+  :config
+  (push 'company-lsp company-backends))
 
 ;; LSP-mode
-(require 'lsp-ui)
-(require 'lsp-mode)
-(setq lsp-idle-delay 1)
-(setq lsp-ui-sideline-delay 1)
-(setq lsp-ui-doc-enable nil)
-(setq lsp-keymap-prefix "SPC l") ;; fix which-key integration, doesn't actually bind (i think)
-(add-hook 'prog-mode-hook 'lsp)
-(add-hook 'prog-mode-hook 'lsp-enable-which-key-integration)
+(use-package lsp-mode
+  :ensure t
+  :hook
+  (prog-mode . lsp)
+  (prog-mode . lsp-enable-which-key-integration)
+  :config
+  (setq lsp-idle-delay 1
+	lsp-keymap-prefix "SPC l"))
+
+(use-package lsp-ui
+  :ensure t
+  :after lsp-mode
+  :config
+  (setq lsp-ui-sideline-delay 1
+	lsp-ui-doc-enable nil))
 
 ;; doom modeline
-(require 'doom-modeline)
-(doom-modeline-mode 1)
+(use-package doom-modeline
+  :ensure t
+  :config
+  (doom-modeline-mode 1))
 
 ;; doom themes
-(require 'doom-themes)
-(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-      doom-themes-enable-italic t) ; if nil, italics is universally disabled
-(doom-themes-visual-bell-config)
-(doom-themes-org-config)
+(use-package doom-themes
+  :ensure t
+  :config
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config))
 
 ;; hightlight matching bracket
-(show-paren-mode t)
 
-;; hide toolbar/menubar
+;; general settings
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+(show-paren-mode t)
 
 ;; 'general' keybindings
 (general-define-key
@@ -153,7 +220,7 @@
  "" '(nil :wk "LeaderKey")
  "SPC" '(amx :wk "M-x")
  "g" 'magit-status
- "n" 'neotree-toggle
+ "t" 'treemacs
 
  ;; window
  "w" '(nil :wk "window")
@@ -174,15 +241,6 @@
  "p" '(projectile-command-map :wk "projectile") ;; why is this different?
  "e" '(:keymap flycheck-command-map :wk "flycheck")
  "l" '(:keymap lsp-command-map :wk "LSP")
-)
-
-;; neotree keybindings
-(general-define-key
- :keymaps 'neotree-mode-map
- "j" 'next-logical-line
- "k" 'previous-logical-line
- "l" 'neotree-quick-look
- "RET" 'custom-neotree-enter-hide
 )
 
 ;; relocate custom settings
