@@ -102,11 +102,6 @@
   :after treemacs magit
   :ensure t)
 
-(use-package treemacs-persp
-  :after treemacs perspective
-  :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
-
 (use-package ace-window
   :ensure t)
 
