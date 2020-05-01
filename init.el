@@ -31,7 +31,6 @@
 
 (use-package treemacs
   :ensure t
-  :defer t
   :init
   (setq treemacs-deferred-git-apply-delay      0.5
 	treemacs-directory-name-transformer    #'identity
@@ -78,6 +77,12 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
+  (defun treemacs-visit-node-and-close (&optional arg)
+    "Visit node and hide treemacs window."
+    (interactive "P")
+    (funcall-interactively treemacs-default-visit-action arg)
+    (treemacs))
+  (treemacs-define-RET-action 'file-node-closed 'treemacs-visit-node-and-close)
   (pcase (cons (not (null (executable-find "git")))
 	       (not (null treemacs-python-executable)))
     (`(t . t)
