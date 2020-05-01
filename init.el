@@ -83,10 +83,11 @@
     (funcall-interactively treemacs-default-visit-action arg)
     (treemacs))
   (treemacs-define-RET-action 'file-node-closed 'treemacs-visit-node-and-close)
+  (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
   (pcase (cons (not (null (executable-find "git")))
 	       (not (null treemacs-python-executable)))
     (`(t . t)
-     (treemacs-git-mode 'deferred))
+     (treemacs-git-mode 'extended))
     (`(t . _)
      (treemacs-git-mode 'simple))))
 
