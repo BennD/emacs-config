@@ -83,7 +83,7 @@
     (funcall-interactively treemacs-default-visit-action arg)
     (treemacs))
   (treemacs-define-RET-action 'file-node-closed 'treemacs-visit-node-and-close)
-  (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?)
+  (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?) ;; use .gitignore to hide files
   (pcase (cons (not (null (executable-find "git")))
 	       (not (null treemacs-python-executable)))
     (`(t . t)
@@ -102,7 +102,8 @@
 (use-package treemacs-icons-dired
   :after treemacs dired
   :ensure t
-  :config (treemacs-icons-dired-mode))
+  :config
+  (treemacs-icons-dired-mode))
 
 (use-package treemacs-magit
   :after treemacs magit
@@ -119,7 +120,8 @@
 ;; evil
 (use-package evil
   :ensure t
-  :config (evil-mode 1))
+  :config
+  (evil-mode 1))
 
 ;; amx
 (use-package amx
@@ -132,7 +134,8 @@
 ;; projectile
 (use-package projectile
   :ensure t
-  :config (projectile-mode 1))
+  :config
+  (projectile-mode 1))
 
 ;; which-key
 (use-package which-key
@@ -202,9 +205,10 @@
 ;; doom themes
 (use-package doom-themes
   :ensure t
-  :config
+  :init
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  :config
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
@@ -244,7 +248,7 @@
 
  ;; keymaps
  "p" '(projectile-command-map :wk "projectile") ;; why is this different?
- "e" '(:keymap flycheck-command-map :wk "flycheck")
+; "e" '(:keymap flycheck-command-map :wk "flycheck")
  "l" '(:keymap lsp-command-map :wk "LSP")
  "P" '(:keymap perspective-map :wk "Perspective")
 )
