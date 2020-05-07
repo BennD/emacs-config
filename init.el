@@ -147,29 +147,33 @@
 ;; smartparens
 (use-package smartparens
   :ensure t
-  :hook (prog-mode . smartparens-mode)
+  :hook
+  (prog-mode . smartparens-mode)
   :config
-  (sp-with-modes '(c-mode c++-mode rustic-mode)
+  (sp-with-modes '(c-mode c++-mode)
     (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET")))
     (sp-local-pair "/*" "*/" :post-handlers '(("| " "SPC") ("* ||\n[i]" "RET")))))
-
-;; rustic
-(use-package rustic
-  :ensure t
-  :hook (rust-mode . rustic-mode)
-  :config (setq rustic-lsp-server 'rust-analyzer))
 
 ;; flycheck
 (use-package flycheck
   :ensure t
-  :hook (prog-mode . flycheck-mode)
-  :config
-  (setq flycheck-highlighting-mode nil))
+  :hook
+  (prog-mode . flycheck-mode)
+  :init
+  (setq flycheck-highlighting-mode nil
+	flycheck-idle-change-delay 1))
+
+;; flycheck-rust
+(use-package flycheck-rust
+  :after flycheck
+  :ensure t
+  :hook
+  (flycheck-mode-hook . flycheck-rust-setup))
 
 ;; company
 (use-package company
   :ensure t
-  :config
+  :init
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.1))
 
@@ -181,18 +185,20 @@
 
 ;; LSP-mode
 (use-package lsp-mode
+  :after flycheck
   :ensure t
   :hook
   (prog-mode . lsp)
   (prog-mode . lsp-enable-which-key-integration)
-  :config
+  :init
   (setq lsp-idle-delay 1
-	lsp-keymap-prefix "SPC l"))
+	lsp-keymap-prefix "SPC l")
+  (defvar lsp-rust-server "rust-analyzer"))
 
 (use-package lsp-ui
   :ensure t
   :after lsp-mode
-  :config
+  :init
   (setq lsp-ui-sideline-delay 1
 	lsp-ui-doc-enable nil))
 
