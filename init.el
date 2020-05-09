@@ -254,7 +254,7 @@
 
  ;; keymaps
  "p" '(projectile-command-map :wk "projectile") ;; why is this different?
-; "e" '(:keymap flycheck-command-map :wk "flycheck")
+ "e" '(:keymap flycheck-command-map :wk "flycheck")
  "l" '(:keymap lsp-command-map :wk "LSP")
  "P" '(:keymap perspective-map :wk "Perspective")
 )
