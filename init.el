@@ -134,6 +134,8 @@
 ;; projectile
 (use-package projectile
   :ensure t
+  :init
+  (setq projectile-track-known-projects-automatically nil)
   :config
   (projectile-mode 1))
 
