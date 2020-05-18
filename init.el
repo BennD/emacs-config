@@ -162,8 +162,7 @@
   :hook
   (prog-mode . flycheck-mode)
   :init
-  (setq flycheck-highlighting-mode nil
-	flycheck-idle-change-delay 1))
+  (setq flycheck-idle-change-delay 1))
 
 ;; flycheck-rust
 (use-package flycheck-rust
