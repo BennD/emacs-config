@@ -184,7 +184,9 @@
   :ensure t
   :init
   (setq company-minimum-prefix-length 1
-	company-idle-delay 0.1))
+	company-idle-delay 0.1)
+  :config
+  (company-tng-configure-default))
 
 (use-package company-lsp
   :ensure t
