@@ -146,6 +146,10 @@
   (which-key-mode)
   (which-key-setup-side-window-bottom))
 
+;; general
+(use-package general
+  :ensure t)
+
 ;; smartparens
 (use-package smartparens
   :ensure t
@@ -163,6 +167,10 @@
   (prog-mode . flycheck-mode)
   :init
   (setq flycheck-idle-change-delay 1))
+
+;; rust
+(use-package rust-mode
+  :ensure t)
 
 ;; flycheck-rust
 (use-package flycheck-rust
