@@ -234,6 +234,7 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (show-paren-mode t)
+(setq tab-width 4)
 
 ;; 'general' keybindings
 (general-define-key
