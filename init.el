@@ -204,7 +204,7 @@
   :init
   (setq lsp-idle-delay 1
 	lsp-keymap-prefix "SPC l")
-  (defvar lsp-rust-server "rust-analyzer"))
+  (defvar lsp-rust-server 'rust-analyzer))
 
 (use-package lsp-ui
   :ensure t
