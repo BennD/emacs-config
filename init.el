@@ -262,10 +262,10 @@
  "b e" '(eval-buffer :wk "eval")
 
  ;; keymaps
- "p" '(projectile-command-map :wk "projectile") ;; why is this different?
- "e" '(:keymap flycheck-command-map :wk "flycheck")
- "l" '(:keymap lsp-command-map :wk "LSP")
- "P" '(:keymap perspective-map :wk "Perspective")
+ "p" '(projectile-command-map :package projectile :wk "projectile") ;; why is this different?
+ "e" '(:keymap flycheck-command-map :package flycheck :wk "flycheck")
+ "l" '(:keymap lsp-command-map :package lsp :wk "LSP")
+ "P" '(:keymap perspective-map :package perspective :wk "Perspective")
 )
 
 ;; relocate custom settings
