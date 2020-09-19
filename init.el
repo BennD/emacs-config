@@ -185,14 +185,11 @@
   :init
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.1)
+  :hook
+  (prog-mode . global-company-mode)
+  (prog-mode . company-tng-mode)
   :config
-  (company-tng-configure-default))
-
-(use-package company-lsp
-  :ensure t
-  :after company
-  :config
-  (push 'company-lsp company-backends))
+  (push 'company-capf company-backends))
 
 ;; LSP-mode
 (use-package lsp-mode
