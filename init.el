@@ -208,8 +208,10 @@
   :ensure t
   :after lsp-mode
   :init
-  (setq lsp-ui-sideline-delay 1
-	lsp-ui-doc-enable nil))
+  (setq lsp-ui-sideline-enable t
+    lsp-ui-sideline-delay 1
+	lsp-ui-doc-enable t
+	lsp-ui-doc-max-height 40))
 
 ;; doom modeline
 (use-package doom-modeline
