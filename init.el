@@ -274,8 +274,12 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file :noerror)
 
-;; relocate backup files to for less clutter
-(setq backup-directory-alist '(("." . "~/.emacs_backup_files")))
+;;; backup/autosave (moved for less clutter)
+(defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
+(defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
+(setq backup-directory-alist (list (cons ".*" backup-dir)))
+(setq auto-save-list-file-prefix autosave-dir)
+(setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 
 (provide 'init)
 ;;; init.el ends here
