@@ -275,11 +275,14 @@
 (load custom-file :noerror)
 
 ;;; backup/autosave (moved for less clutter)
-(defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
-(defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
-(setq backup-directory-alist (list (cons ".*" backup-dir)))
-(setq auto-save-list-file-prefix autosave-dir)
-(setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+;; TODO fix, i think the problem is that the folders may not exist
+;; (defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
+;; (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
+;; (setq backup-directory-alist (list (cons ".*" backup-dir)))
+;; (setq auto-save-list-file-prefix autosave-dir)
+;; (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 
 (provide 'init)
 ;;; init.el ends here
