@@ -235,6 +235,22 @@
 (scroll-bar-mode -1)
 (show-paren-mode t)
 (setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+;; navigate source code
+(general-define-key
+ :states '(normal)
+ :keymaps 'override
+ "M-/" '(lsp-ui-peek-find-definitions :wk "Peek-Definition")
+ "M-," '(lsp-ui-peek-jump-backward :wk "Navigate-Back")
+ "M-." '(lsp-ui-peek-jump-forward :wk "Navigate-Forward"))
+
+;; navigate vim-like in emacs-mode
+(general-define-key
+ :states '(emacs)
+ :keymaps 'override
+ "j" '(lambda () (interactive) (next-line))
+ "k" '(lambda () (interactive) (previous-line)))
 
 ;; 'general' keybindings
 (general-define-key
