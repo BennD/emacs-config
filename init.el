@@ -199,9 +199,10 @@
   (prog-mode . lsp)
   (prog-mode . lsp-enable-which-key-integration)
   :init
-  (setq lsp-idle-delay 1
-	lsp-keymap-prefix "SPC l")
-  (defvar lsp-rust-server 'rust-analyzer))
+  (setq lsp-idle-delay 1)
+  (defvar lsp-rust-server 'rust-analyzer)
+  :config
+  (setq lsp-keymap-prefix "SPC l"))
 
 (use-package lsp-ui
   :ensure t
@@ -237,6 +238,7 @@
 (general-define-key
  :prefix "SPC"
  :states '(normal emacs)
+ :keymaps 'override
 
  ;; ungrouped
  "" '(nil :wk "LeaderKey")
@@ -264,7 +266,7 @@
  ;; keymaps
  "p" '(projectile-command-map :package projectile :wk "projectile") ;; why is this different?
  "e" '(:keymap flycheck-command-map :package flycheck :wk "flycheck")
- "l" '(:keymap lsp-command-map :package lsp :wk "LSP")
+ "l" '(:keymap lsp-command-map :package lsp-mode :wk "LSP")
  "P" '(:keymap perspective-map :package perspective :wk "Perspective")
 )
 
