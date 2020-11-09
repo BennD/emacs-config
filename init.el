@@ -234,8 +234,10 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (show-paren-mode t)
-(setq tab-width 4)
-(setq-default indent-tabs-mode nil)
+(setq-default
+ indent-tabs-mode nil
+ tab-width 4
+ c-basic-offset 4)
 
 ;; navigate source code
 (general-define-key
