@@ -177,7 +177,7 @@
   :after flycheck
   :ensure t
   :hook
-  (flycheck-mode-hook . flycheck-rust-setup))
+  (rust-mode-hook . flycheck-rust-setup))
 
 ;; company
 (use-package company
