@@ -266,6 +266,7 @@
  "g" '(magit-status :wk "git")
  "f" '(treemacs :wk "files")
  "P C-x" '(nil :wk "UNUSED")
+ "TAB" '(ff-find-other-file :wk "Source/Header")
 
  ;; window
  "w" '(nil :wk "window")
